@@ -8,7 +8,22 @@ export default function Home() {
    useEffect(() => { //UseEffect runs after component first renders. Runs API call once on mount
       axios.get('https://ghibliapi.vercel.app/films')
          .then(response => {  //After fetch then
-            setMovies(response.data); //Stores the api response in state
+           const ghibliMovies = response.data;
+           //Manually added the boy and the heron since it not inlcuded in the api
+                  const newMovie = {
+          id: 'boy-and-heron', 
+          title: 'The Boy and the Heron',
+          description: `After losing his mother during the war, young Mahito moves to his family's estate in the countryside. There, a series of mysterious events lead him to a secluded and ancient tower, home to a mischievous gray heron. When Mahito's new stepmother disappears, he follows the gray heron into the tower, and enters a fantastic world shared by the living and the dead. As he embarks on an epic journey with the heron as his guide, Mahito must uncover the secrets of this world, and the truth about himself.`,
+          release_date: '2023',
+          original_title: '君たちはどう生きるか',
+          running_time: '124',
+          rt_score: '96',
+          director: 'Hayao Miyazaki'
+        };
+        //Fetched movies and new movie combined
+        const allMovies = [...ghibliMovies, newMovie];
+
+        setMovies(allMovies); //Store updated movie list in state
          })
          .catch(error => {
             console.error('There was an error fetching movies:', error);
