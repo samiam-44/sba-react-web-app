@@ -1,10 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { BrowserRouter } from "react-router-dom"; //enable client side routing (reroute by clicking on links)
+import React from 'react'; //core React library needed for JSX to work
+import ReactDOM from 'react-dom/client'; //Render app to DOM
+import App from "./App"; //main component
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+
+//Mount App to the root element in index.html
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);
