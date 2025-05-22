@@ -12,13 +12,13 @@ const initialState = {
 // Reducer function to handle all actions
 function movieReducer(state, action) {
   switch (action.type) {
-    case 'Add':
-      if (state.bucketlist.some(movie => movie.id === action.payload.id)) {
-        return state;
-      }
+    case 'ToggleBucketlist':
+      const exists = state.bucketlist.some(movie => movie.id === action.payload.id);
       return {
         ...state,
-        bucketlist: [...state.bucketlist, action.payload]
+        bucketlist: exists
+          ? state.bucketlist.filter(movie => movie.id !== action.payload.id)
+          : [...state.bucketlist, action.payload]
       };
     case 'MarkSeen':
       if (state.seenList.some(movie => movie.id === action.payload.id)) {
@@ -56,8 +56,8 @@ function movieReducer(state, action) {
 function MovieProvider({ children }) {
   const [state, dispatch] = useReducer(movieReducer, initialState);
 
-  const addToBucketlist = (movie) => {
-    dispatch({ type: 'Add', payload: movie });
+   const toggleBucketlist = (movie) => {
+    dispatch({ type: 'ToggleBucketlist', payload: movie });
   };
 
   const markAsSeen = (movie) => {
@@ -80,7 +80,7 @@ function MovieProvider({ children }) {
       value={{
         bucketlist: state.bucketlist,
         seenList: state.seenList,
-        addToBucketlist,
+        toggleBucketlist,
         markAsSeen,
         toggleSeen,
         addComment

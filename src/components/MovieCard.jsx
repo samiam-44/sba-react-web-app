@@ -14,7 +14,7 @@ export default function MovieCard({ movie }) {
 
   //context values
   const {
-    addToBucketlist,
+    toggleBucketlist,
     bucketlist,
     seenList,
     toggleSeen,
@@ -74,13 +74,10 @@ export default function MovieCard({ movie }) {
         {showFull ? 'Show Less' : 'Read More'}
       </button>
 
-      {/* Add to Bucketlist */}
-      <button
-        onClick={() => addToBucketlist(movie)}
-        disabled={isInBucketlist}
-      >
-        {isInBucketlist ? 'Added to Bucketlist' : 'Add to Bucketlist'}
-      </button>
+  {/* Toggle Add/Remove from Bucketlist */}
+    <button onClick={() => toggleBucketlist(movie)}>
+      {isInBucketlist ? 'Remove from Bucketlist' : 'Add to Bucketlist'}
+    </button>
 
       {/* Toggle Seen  */}
       <button onClick={() => toggleSeen(movie)}>
