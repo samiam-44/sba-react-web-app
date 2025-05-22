@@ -57,12 +57,12 @@ const isSeen = seenList.some((m) => m.id === movie.id);
       </button>
        {!isSeen && (
         <>
-          {/* Add to bucketlist button — disables if already added */}
+          {/* bucketlist toggle button */}
           <button 
             onClick={() => addToBucketlist(movie)}
             disabled={isInBucketlist}
           >
-            {isInBucketlist ? 'In Bucketlist' : 'Add to Bucketlist'}
+            {isInBucketlist ? 'Added to Bucketlist' : 'Add to Bucketlist'}
           </button>
 
           {/* Mark movie as seen */}
@@ -72,9 +72,8 @@ const isSeen = seenList.some((m) => m.id === movie.id);
         </>
       )}
 
-      {/* If already seen, show a note instead of buttons */}
       {isSeen && (
-        <p><em>Already marked as seen.</em></p>
+        <p><em>SEEN</em></p>
       )}
     </div>
   );
