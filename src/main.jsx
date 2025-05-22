@@ -8,10 +8,10 @@ import { MovieProvider } from "./context/MovieContext";
 //Mount App to the root element in index.html
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <MovieProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+      <MovieProvider> 
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </MovieProvider>
   </React.StrictMode>
 );
