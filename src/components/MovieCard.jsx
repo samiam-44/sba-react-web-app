@@ -2,17 +2,17 @@ import { useState } from 'react';
 import usePoster from '../hooks/usePoster';
 import { useMovieContext } from '../context/MovieContext';
 
-
 export default function MovieCard({ movie }) {
   // Local state to track whether to show full description
   const [showFull, setShowFull] = useState(false);
   // Local state to track comment input
   const [commentInput, setCommentInput] = useState('');
-//rating
+  // Local state to track star rating selection
   const [rating, setRating] = useState(0);
+
   const posterUrl = usePoster(movie.title, movie.release_date); //Hook to fetch poster based on movie title also needs to be inside function so it renders with function
 
-  //Destructured context values like functions and global state lists
+  //context values
   const {
     addToBucketlist,
     bucketlist,
@@ -31,11 +31,12 @@ export default function MovieCard({ movie }) {
   const currentSeen = seenList.find((m) => m.id === movie.id);
   const savedComment = currentSeen?.comment || '';
   const savedRating = currentSeen?.rating || 0;
+
   //Save comment and rating to global state
   const handleCommentSubmit = () => {
-    addComment(movie.id, commentInput);
+    addComment(movie.id, commentInput, rating); // Pass rating to context
     setCommentInput(''); // clear after saving
-    setRating(0)
+    setRating(0); // clear rating after saving
   };
 
   // Toggle description display when button is clicked
@@ -93,17 +94,46 @@ export default function MovieCard({ movie }) {
       {isSeen && (
         <div className="comment-box">
           <textarea
-            rows="3"
+            rows="4"
             placeholder="Leave a review..."
             value={commentInput}
             onChange={(e) => setCommentInput(e.target.value)}
           />
+
+          {/* Star Rating UI */}
+          <div className="star-rating">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span
+                key={star}
+                onClick={() => setRating(star)} // Set selected rating
+                style={{
+                  cursor: 'pointer',
+                  color: star <= rating ? '#ffc107' : '#ccc',
+                  fontSize: '20px'
+                }}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+
           <button onClick={handleCommentSubmit}>Post Review</button>
+
           {savedComment && (
             <p><strong>Your Review:</strong> {savedComment}</p>
+          )}
+
+          {savedRating > 0 && (
+            <p>
+              <strong>Your Rating:</strong>{' '}
+              {[...Array(savedRating)].map((_, i) => (
+                <span key={i} style={{ color: '#ffc107' }}>★</span>
+              ))}
+            </p>
           )}
         </div>
       )}
     </div>
   );
 }
+
