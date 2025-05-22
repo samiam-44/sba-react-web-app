@@ -6,20 +6,20 @@ import { useMovieContext } from '../context/MovieContext';
 export default function MovieCard({ movie }) {
   // Local state to track whether to show full description
   const [showFull, setShowFull] = useState(false);
-const posterUrl = usePoster(movie.title, movie.release_date);//Hook to fetch poster based on movie title also needs to be inside function so it renders with function
-//Destructured context values like functions and global state lists
-const {  
-  addToBucketlist,
-  markAsSeen,
-  bucketlist,
-  seenList
-} = useMovieContext();
+  const posterUrl = usePoster(movie.title, movie.release_date);//Hook to fetch poster based on movie title also needs to be inside function so it renders with function
+  //Destructured context values like functions and global state lists
+  const {
+    addToBucketlist,
+    bucketlist,
+    seenList,
+    toggleSeen
+  } = useMovieContext();
 
-//Check if movie is already in the bucketlist
-const isInBucketlist = bucketlist.some((m) => m.id === movie.id);
+  //Check if movie is already in the bucketlist
+  const isInBucketlist = bucketlist.some((m) => m.id === movie.id);
 
-//check if movie has already been marked as seen
-const isSeen = seenList.some((m) => m.id === movie.id);
+  //check if movie has already been marked as seen
+  const isSeen = seenList.some((m) => m.id === movie.id);
 
   // Toggle description display when button is clicked
   const toggleDescription = () => {
@@ -28,14 +28,14 @@ const isSeen = seenList.some((m) => m.id === movie.id);
 
   return (
     <div className="movie-card">
-      <h2>{movie.title}</h2> 
-            {/* Render the poster if found*/}
+      <h2>{movie.title}</h2>
+      {/* Render the poster if found*/}
       {posterUrl ? (
-        <img 
-        src={posterUrl} 
-        alt={`${movie.title} poster`}
-         className="poster-img" 
-         />
+        <img
+          src={posterUrl}
+          alt={`${movie.title} poster`}
+          className="poster-img"
+        />
       ) : (
         <p>No poster available</p>
       )}
@@ -55,26 +55,23 @@ const isSeen = seenList.some((m) => m.id === movie.id);
       <button onClick={toggleDescription}>
         {showFull ? 'Show Less' : 'Read More'}
       </button>
-       {!isSeen && (
-        <>
-          {/* bucketlist toggle button */}
-          <button 
-            onClick={() => addToBucketlist(movie)}
-            disabled={isInBucketlist}
-          >
-            {isInBucketlist ? 'Added to Bucketlist' : 'Add to Bucketlist'}
-          </button>
+      {/* Add to Bucketlist */}
+      <button
+        onClick={() => addToBucketlist(movie)}
+        disabled={isInBucketlist}
+      >
+        {isInBucketlist ? 'Added to Bucketlist' : 'Add to Bucketlist'}
+      </button>
 
-          {/* Mark movie as seen */}
-          <button onClick={() => markAsSeen(movie)}>
-            Mark as Seen
-          </button>
-        </>
-      )}
+      {/* Toggle Seen  */}
+      <button onClick={() => toggleSeen(movie)}>
+        {isSeen ? 'Not Seen' : 'Seen'}
+      </button>
 
-      {isSeen && (
-        <p><em>SEEN</em></p>
-      )}
+      {/* Seen tag */}
+      {isSeen && <p><em>SEEN</em></p>}
+
+      
     </div>
   );
 }
