@@ -6,7 +6,6 @@ export default function Navbar() {
       <Link to="/">Home</Link>
       <Link to="/bucketlist">My Bucketlist Movies</Link>
       <Link to="/seen">Seen</Link>
-      <Link to="/about">About</Link>
     </nav>
   );
 }

@@ -8,7 +8,7 @@ export default function Carousel({ children }) {
   const next = () => setIndex(index === total - 1 ? 0 : index + 1);
 
   return (
-    <div style={{ width: '50%', margin: 'auto' }}>
+    <div class= 'carousel-controls' style={{ width: '50%', margin: 'auto' }}>
       <div
         style={{
           display: 'flex',
@@ -18,13 +18,13 @@ export default function Carousel({ children }) {
         }}
       >
         {React.Children.map(children, (child) => (
-          <div style={{ flex: `0 0 ${100 / total}%` }}>
+          <div>
             {child}
           </div>
         ))}
       </div>
-      <div style={{ textAlign: 'center', marginTop: 10 }}>
-        <button onClick={prev} style={{ marginRight: 10 }}>Prev</button>
+      <div id='carouselButton'>
+        <button onClick={prev}>Prev</button>
         <button onClick={next}>Next</button>
       </div>
     </div>
