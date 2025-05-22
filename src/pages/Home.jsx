@@ -32,7 +32,7 @@ export default function Home() {
 
    return (
       <div>
-         <h1>Ghibli Shelf</h1>
+         <h1> My Ghibli Shelf</h1>
          {movies.length === 0 ? ( //if array is still empty data isnt fully loaded yet
             <p>Loading movies...</p>
          ) : ( //otherwise movies render

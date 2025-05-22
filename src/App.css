@@ -1,0 +1,34 @@
+.navbar {
+  background-color: #DADADA; 
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar a {
+  color: #6C7A8E;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #A6D784; 
+  color: #fff;
+}
+
+html {
+    background-color: #A6D784;
+    color: cornsilk;
+}
+
+h1 {
+    text-align: center;
+}
+
+
