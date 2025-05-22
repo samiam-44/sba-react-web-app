@@ -6,13 +6,19 @@ import { useMovieContext } from '../context/MovieContext';
 export default function MovieCard({ movie }) {
   // Local state to track whether to show full description
   const [showFull, setShowFull] = useState(false);
-  const posterUrl = usePoster(movie.title, movie.release_date);//Hook to fetch poster based on movie title also needs to be inside function so it renders with function
+  // Local state to track comment input
+  const [commentInput, setCommentInput] = useState('');
+//rating
+  const [rating, setRating] = useState(0);
+  const posterUrl = usePoster(movie.title, movie.release_date); //Hook to fetch poster based on movie title also needs to be inside function so it renders with function
+
   //Destructured context values like functions and global state lists
   const {
     addToBucketlist,
     bucketlist,
     seenList,
-    toggleSeen
+    toggleSeen,
+    addComment
   } = useMovieContext();
 
   //Check if movie is already in the bucketlist
@@ -20,6 +26,17 @@ export default function MovieCard({ movie }) {
 
   //check if movie has already been marked as seen
   const isSeen = seenList.some((m) => m.id === movie.id);
+
+  //Add comment option if movie is found in seen list 
+  const currentSeen = seenList.find((m) => m.id === movie.id);
+  const savedComment = currentSeen?.comment || '';
+  const savedRating = currentSeen?.rating || 0;
+  //Save comment and rating to global state
+  const handleCommentSubmit = () => {
+    addComment(movie.id, commentInput);
+    setCommentInput(''); // clear after saving
+    setRating(0)
+  };
 
   // Toggle description display when button is clicked
   const toggleDescription = () => {
@@ -55,6 +72,7 @@ export default function MovieCard({ movie }) {
       <button onClick={toggleDescription}>
         {showFull ? 'Show Less' : 'Read More'}
       </button>
+
       {/* Add to Bucketlist */}
       <button
         onClick={() => addToBucketlist(movie)}
@@ -71,7 +89,21 @@ export default function MovieCard({ movie }) {
       {/* Seen tag */}
       {isSeen && <p><em>SEEN</em></p>}
 
-      
+      {/* Comment box only visible if movie is marked as seen */}
+      {isSeen && (
+        <div className="comment-box">
+          <textarea
+            rows="3"
+            placeholder="Leave a review..."
+            value={commentInput}
+            onChange={(e) => setCommentInput(e.target.value)}
+          />
+          <button onClick={handleCommentSubmit}>Post Review</button>
+          {savedComment && (
+            <p><strong>Your Review:</strong> {savedComment}</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
