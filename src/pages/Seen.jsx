@@ -1,6 +1,6 @@
 import { useMovieContext } from '../context/MovieContext'; 
 import MovieCard from '../components/MovieCard';
-
+import Carousel from '../components/Carousel';
 export default function Seen() {
   const { seenList } = useMovieContext();
 
@@ -14,11 +14,14 @@ export default function Seen() {
       {seenListMovies.length === 0 ? (
         <p>You haven't added any movies to your SEEN list yet.</p>
       ) : (
+      
         <div className="movie-grid">
           {/* Render MovieCard for each movie in the bucket list */}
+            <Carousel>
           {seenListMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
+          </Carousel>
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios'
 import MovieCard from '../components/MovieCard'
-
+import Carousel from '../components/Carousel';
 export default function Home() {
    const [movies, setMovies] = useState([]); //Local state to store the movies from the Ghibli api
    //Fetch movies when component mounts
@@ -36,12 +36,16 @@ export default function Home() {
          {movies.length === 0 ? ( //if array is still empty data isnt fully loaded yet
             <p>Loading movies...</p>
          ) : ( //otherwise movies render
+           
             <div className='movie-grid'>
+               <Carousel>
                {movies.map(movie => (
                   <MovieCard key={movie.id} movie={movie} /> //renders card for each movie and passes whole movie object as a prop
+                
                ))}
-
+            </Carousel>
             </div>
+            
          )}
       </div>
    );
